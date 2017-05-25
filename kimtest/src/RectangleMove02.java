@@ -29,9 +29,6 @@ public class RectangleMove02 extends JFrame
 	{
 
 		
-		Point startP=null;
-		Point endP=null;
-		Point tempP=null;
 		
 		Vector<Point> starV = new Vector<Point>(); // 시작점
 		Vector<Point> endV = new Vector<Point>(); // 끝점
