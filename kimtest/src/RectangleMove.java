@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Vector;
 
 class RectangleMove extends JComponent implements MouseListener, MouseMotionListener
 {
@@ -13,9 +14,14 @@ class RectangleMove extends JComponent implements MouseListener, MouseMotionList
 	//마우스 오프셋좌표
 	int offX, offY;
 
+	Point startP=null;
+	Point endP=null;
+	Point tempP=null;
+
 	public RectangleMove(){
 
 		//사각형영역 정의(100x80 size)
+
 		box = new Rectangle(0,0,100,80);
 
 		//현재 드래그 상태 저장

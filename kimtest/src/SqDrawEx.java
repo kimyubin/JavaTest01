@@ -64,7 +64,7 @@ public class SqDrawEx extends JFrame
 				for(int i=0;i<endV.size();i++)  // 벡터에 저장된 각 사각형을 비교
 				{
 					 // 사각형 안쪽에 클릭하면 
-					if(startP.x>=starV.get(i).x && startP.x<=endV.get(i).x) // x값 비교
+					if(startP.x>=starV.get(i).x && endP.x<=endV.get(i).x) // x값 비교
 					{
 						if(startP.y>=starV.get(i).y && endP.x<=endV.get(i).y) // y값 비교
 						{
@@ -85,24 +85,11 @@ public class SqDrawEx extends JFrame
 			}
 			public void mouseReleased(MouseEvent e)
 			{
-
-				if(moveSq)
-				{
-					tempP = e.getPoint();
-					tempP.x = starV.get(v).x + (tempP.x-startP.x); // 현재 백터 x축 + (x축 이동한 거리)
-					tempP.y = starV.get(v).y + (tempP.y-startP.y); // y축 이동한 거리
-					
-
-					starV.add(v,tempP);
-					moveSq=false;
-
-				}
-				else
-				{
-					endV.add(e.getPoint()); // 쨉책쨌징짹횞 횉횗쨘횓쨘횖�쨩 횁쩐쨌찼횁징�쨍쨌횓
-					endP = e.getPoint();
+				moveSq = false;
+				endV.add(e.getPoint()); // 쨉책쨌징짹횞 횉횗쨘횓쨘횖�쨩 횁쩐쨌찼횁징�쨍쨌횓
+				endP = e.getPoint();
 					 // 쨈횢쩍횄짹횞쨌횁쨋처
-				}
+				
 				repaint();
 
 			}
@@ -117,7 +104,6 @@ public class SqDrawEx extends JFrame
 					
 
 					starV.add(v,tempP);
-					moveSq=false;
 				}
 				else
 				{
