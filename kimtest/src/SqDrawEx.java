@@ -37,6 +37,14 @@ public class SqDrawEx extends JFrame
 		
 		public void paintComponent(Graphics g){
 			super.paintComponent(g); // 쨘횓쨍챨 횈채�횓횈짰횊짙횄창
+
+			
+
+			g.drawRect(box[k].x,box[k].y,box[k].width,box[k].height);	
+
+			
+
+
 			
 			if(sv.size() != 0)
 			{
@@ -48,7 +56,8 @@ public class SqDrawEx extends JFrame
 				}
 			}
 			if(startP != null)
-				g.drawRect(startP.x, startP.y, endP.x-startP.x, endP.y-startP.y);				
+				g.drawRect(startP.x, startP.y, endP.x-startP.x, endP.y-startP.y);	
+							
 		}
 		
 		class MyMouseListener extends MouseAdapter implements MouseMotionListener{
@@ -58,13 +67,14 @@ public class SqDrawEx extends JFrame
 				sv.add(e.getPoint()); // 횇짭쨍짱횉횗쨘횓쨘횖�쨩 쩍횄�횤횁징�쨍쨌횓
 
 				k++;
-				box[k] = new Rectangle();
+				
 				
 			}
 			public void mouseReleased(MouseEvent e)
 			{
 				se.add(e.getPoint()); // 쨉책쨌징짹횞 횉횗쨘횓쨘횖�쨩 횁쩐쨌찼횁징�쨍쨌횓
 				endP = e.getPoint();
+				box[k] = new Rectangle(startP.x, startP.y, endP.x-startP.x, endP.y-startP.y);
 				repaint(); // 쨈횢쩍횄짹횞쨌횁쨋처
 			}
 			

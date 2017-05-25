@@ -1,4 +1,3 @@
-package kimtest;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
