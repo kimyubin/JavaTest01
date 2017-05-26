@@ -29,11 +29,11 @@ public class RectangleMove02 extends JFrame
 	public Rectangle pointToRec(int sx, int sy, int ex, int ey)
 	//좌표 입력하면 사각형으로 만들어줌
 	{
-		return new Rectangle(sx,sy,ex-sx,ey-sy)
+		return new Rectangle(sx,sy,ex-sx,ey-sy);
 	} 
 	public Point RecToEndPoint(Rectangle a) //사각형 입력하면 끝 좌표 만들어줌
 	{
-		return new point(a.x+a.width,a.y+a.height)
+		return new point(a.x+a.width,a.y+a.height);
 	} 
 
 
@@ -58,7 +58,7 @@ public class RectangleMove02 extends JFrame
 			endP.y=80;
 			starV.add(startP);
 			endV.add(endP);
-			box.add(pointToRec(startP.x,startP.y,endP.x,endP.y))
+			box.add(pointToRec(startP.x,startP.y,endP.x,endP.y));
 
 
 			startP.x=120;
@@ -67,7 +67,7 @@ public class RectangleMove02 extends JFrame
 			endP.y=300;
 			starV.add(startP);
 			endV.add(endP);
-			box.add(pointToRec(startP.x,startP.y,endP.x,endP.y))
+			box.add(pointToRec(startP.x,startP.y,endP.x,endP.y));
 
 
 
