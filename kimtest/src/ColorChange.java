@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 
-public class RectangleResize extends JFrame 
+public class ColorChange extends JFrame 
 {
 	//마우스 오프셋좌표
 	public int offX, offY;
@@ -17,10 +17,13 @@ public class RectangleResize extends JFrame
 	public	Point startP;
 	public	Point endP;
 	public	Point moveP;
+	Vector<Boolean> click = new Vector();
 
-	public RectangleResize()
+
+
+	public ColorChange()
 	{
-		setContentPane(new ResizeSq());
+		setContentPane(new ColorSq());
 		setSize(500,500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -32,7 +35,7 @@ public class RectangleResize extends JFrame
 
 
 	
-	class ResizeSq extends JPanel
+	class ColorSq extends JPanel
 	{
 		
 		Vector<Point> startV = new Vector<Point>(); // 시작점
@@ -47,7 +50,7 @@ public class RectangleResize extends JFrame
 		Point A3e = new Point(250,100);
 
 
-		public ResizeSq()
+		public ColorSq()
 		{
 			MouseListen ml = new MouseListen();
 			
@@ -56,14 +59,19 @@ public class RectangleResize extends JFrame
 			//박스 0
 			startV.add(A1s);
 			endV.add(A1e);
+			click.add(true);
 
 			//박스 1
 			startV.add(A2s);
 			endV.add(A2e);
+			click.add(true);
+
 
 			//박스 2
 			startV.add(A3s);
 			endV.add(A3e);
+			click.add(true);
+
 		}
 		
 
@@ -72,25 +80,36 @@ public class RectangleResize extends JFrame
 		{
 			super.paintComponent(g); 	
 
-			for(int i=0;i<startV.size();i++)  // 벡터에 저장된 각 사각형을 매번 그림
+			for(int i=0;i<endV.size();i++)  // 벡터에 저장된 각 사각형을 매번 그림
 				{
 					Point sp = startV.get(i);
 					Point ep = endV.get(i);	
-					g.drawRect(sp.x, sp.y, ep.x-sp.x, ep.y-sp.y);
-				}									
+					if(click.get(i))
+						{g.setColor(Color.GREEN);}
+					else
+						{g.setColor(Color.RED);}
+
+					g.fillRect(sp.x, sp.y, ep.x-sp.x, ep.y-sp.y);
+				}								
 		}
 		
 		class MouseListen extends MouseAdapter implements MouseMotionListener
 		{
 			public void mousePressed(MouseEvent e)
 			{
-				rec = TransPoint.EndToTempRec(endV.get(BoxNum),10);
+				Point temp = new Point(e.getX(),e.getY());
 				// 임시 사각형(우측하단 모서리 근처) 안에 커서가 있을 경우
-				if(rec.contains(new Point(e.getX(),e.getY())))
-				{			
-					//드래그 시작을 표시
-					isDragged = true;
-				}
+				
+				for(int i=0;i<endV.size();i++)  // 벡터에 저장된 각 사각형을 매번 그림
+				{
+					Point sp = startV.get(i);
+					Point ep = endV.get(i);	
+					rec = TransPoint.pointToRec(sp,ep);
+					if(rec.contains(temp))
+					{	
+						click.setElementAt(false,i) ;
+					}
+				}	
 			}
 
 
@@ -98,18 +117,11 @@ public class RectangleResize extends JFrame
 			public void mouseReleased(MouseEvent e)
 			{
 				//마우스 버튼이 릴리즈되면 드래그 모드 종료
-				isDragged = false;		
 			}
 			
 			public void mouseDragged(MouseEvent e)
 			{
-				//드래그 모드인 경우에만 사각형 이동시킴
-				if(isDragged)
-				{
-					endP.move(e.getX(),e.getY());
-					endV.setElementAt(endP,BoxNum);
-				}
-				repaint();
+				
 			}
 			
 			public void mouseMoved(MouseEvent e){}
@@ -121,6 +133,6 @@ public class RectangleResize extends JFrame
 	
 	public static void main(String[] args) 
 	{
-		new RectangleResize();
+		new ColorChange();
 	}
 }
