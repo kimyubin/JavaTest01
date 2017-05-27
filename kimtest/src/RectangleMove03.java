@@ -51,14 +51,6 @@ public class RectangleMove03 extends JFrame
 			
 			this.addMouseListener(ml); 
 			this.addMouseMotionListener(ml);
-		}
-		
-
-
-		public void paintComponent(Graphics g)
-		{
-			super.paintComponent(g); 	
-
 			//박스 0
 			startV.add(A1s);
 			endV.add(A1e);
@@ -70,6 +62,13 @@ public class RectangleMove03 extends JFrame
 			//박스 2
 			startV.add(A3s);
 			endV.add(A3e);
+		}
+		
+
+
+		public void paintComponent(Graphics g)
+		{
+			super.paintComponent(g); 	
 
 			for(int i=0;i<startV.size();i++)  // 벡터에 저장된 각 사각형을 매번 그림
 				{
@@ -86,7 +85,7 @@ public class RectangleMove03 extends JFrame
 				rec = TransPoint.pointToRec(startV.get(0),endV.get(0));
 				if(rec.contains(new Point(e.getX(),e.getY())))
 				{
-					//현재 위치 저장 
+					//상대 위치 저장
 					moveP.x=e.getX() - rec.x;
 					moveP.y=e.getY() - rec.y;
 			
@@ -108,32 +107,18 @@ public class RectangleMove03 extends JFrame
 				//드래그 모드인 경우에만 사각형 이동시킴
 				if(isDragged)
 				{
-					/*
-					rec.x = e.getX() - offX;
-					rec.y = e.getY() - offY;
+					rec.x = e.getX() - moveP.x;
+					rec.y = e.getY() - moveP.y;
 
 					startP=TransPoint.RecToStartPoint(rec);
 					endP=TransPoint.RecToEndPoint(rec);
 
-				
-					
+									
 					startV.setElementAt(startP,0);
 					endV.setElementAt(endP,0);
-				*/
-
-					afterStartX = startV.get(1).x+(e.getX() - moveP.x); // 저장된 X 좌표 + (현재 위치 - 클릭 위치)(이동 거리) = 이동 후 좌표
-					afterStartY = startV.get(1).y+(e.getY() - moveP.y);
-					afterEndX = endV.get(1).x+(e.getX() - moveP.x); 
-					afterEndY = endV.get(1).y+(e.getX() - moveP.x);
-
-					startP.move(afterStartX,afterStartY);
-					endP.move(afterEndX,afterEndY);
-					
-					startV.setElementAt(startP, 1);
-					endV.setElementAt(endP, 1);
-
+						
 				}
-
+				repaint();
 			}
 			
 			public void mouseMoved(MouseEvent e){}
