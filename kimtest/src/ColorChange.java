@@ -17,7 +17,6 @@ public class ColorChange extends JFrame
 	public	Point startP;
 	public	Point endP;
 	public	Point moveP;
-	Vector<Boolean> click = new Vector();
 
 
 
@@ -40,7 +39,8 @@ public class ColorChange extends JFrame
 		
 		Vector<Point> startV = new Vector<Point>(); // 시작점
 		Vector<Point> endV = new Vector<Point>(); // 끝
-		
+		Vector<Boolean> click = new Vector<Boolean>();
+		boolean[] tempB = new boolean[10];
 
 		Point A1s = new Point(0,0);
 		Point A1e = new Point(100,100);
@@ -59,18 +59,22 @@ public class ColorChange extends JFrame
 			//박스 0
 			startV.add(A1s);
 			endV.add(A1e);
-			click.add(true);
+			tempB[0] = true;
+
+			//click.add(temp);
 
 			//박스 1
 			startV.add(A2s);
 			endV.add(A2e);
-			click.add(true);
+			tempB[1] = true;
+			//click.add(temp);
 
 
 			//박스 2
 			startV.add(A3s);
 			endV.add(A3e);
-			click.add(true);
+			tempB[2] = true;
+			//click.add(temp);
 
 		}
 		
@@ -84,7 +88,7 @@ public class ColorChange extends JFrame
 				{
 					Point sp = startV.get(i);
 					Point ep = endV.get(i);	
-					if(click.get(i))
+					if(tempB[i]/*click.get(i).booleanValue()*/)
 						{g.setColor(Color.GREEN);}
 					else
 						{g.setColor(Color.RED);}
@@ -95,37 +99,32 @@ public class ColorChange extends JFrame
 		
 		class MouseListen extends MouseAdapter implements MouseMotionListener
 		{
-			public void mousePressed(MouseEvent e)
+			public void mouseClicked(MouseEvent e)
 			{
-				Point temp = new Point(e.getX(),e.getY());
-				// 임시 사각형(우측하단 모서리 근처) 안에 커서가 있을 경우
-				
-				for(int i=0;i<endV.size();i++)  // 벡터에 저장된 각 사각형을 매번 그림
+				//벡터에 저장된 사각형 안에 커서가 있는 지 확인
+				for(int i=0;i<endV.size();i++)  
 				{
 					Point sp = startV.get(i);
 					Point ep = endV.get(i);	
 					rec = TransPoint.pointToRec(sp,ep);
-					if(rec.contains(temp))
+
+					if(rec.contains(new Point(e.getX(),e.getY())))
 					{	
-						click.setElementAt(false,i) ;
+						//Boolean tempB = new Boolean(true);
+						tempB[i]=false;
+						break;
+
+					//	click.setElementAt(tempB,i) ;
 					}
-				}	
+				}
 			}
 
 
-			
-			public void mouseReleased(MouseEvent e)
-			{
-				//마우스 버튼이 릴리즈되면 드래그 모드 종료
-			}
-			
-			public void mouseDragged(MouseEvent e)
-			{
-				
-			}
-			
-			public void mouseMoved(MouseEvent e){}
-			public void mouseClicked(MouseEvent e){}
+
+			public void mousePressed(MouseEvent e){}
+			public void mouseReleased(MouseEvent e){}			
+			public void mouseDragged(MouseEvent e){}			
+			public void mouseMoved(MouseEvent e){}			
 			public void mouseEntered(MouseEvent e){}
 			public void mouseExited(MouseEvent e){}
 		}
